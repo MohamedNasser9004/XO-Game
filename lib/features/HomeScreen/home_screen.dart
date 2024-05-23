@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'players_screen.dart';
+import '../PlayersScreen/players_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -37,9 +37,9 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 300,
               width: 300,
             )),
-           
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 50.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 50.0),
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
                 onPressed: () {
@@ -67,7 +67,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-          
           ],
         ),
       ),

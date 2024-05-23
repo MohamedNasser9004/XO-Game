@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'game_screen.dart';
+import '../GameScreen/game_screen.dart';
 
 // ignore: must_be_immutable
 class PlayersScreen extends StatefulWidget {
@@ -118,48 +118,43 @@ class _PlayersScreenState extends State<PlayersScreen> {
             ),
           ),
         ),
-        
- Padding(
-              padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 50.0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                onPressed: () {
-                   Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => GameScreen(
-                      player1: player1.text.isNotEmpty
-                          ? player1.text.trim()
-                          : "Player 1",
-                      player2: player2.text.isNotEmpty
-                          ? player2.text.trim()
-                          : "Player 2",
-                    )),
-          );
-                },
-                child: Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    shape: BoxShape.circle,
-                  ),
-                  child: const Center(
-                    child: Text(
-                      'Start Game',
-                      style: TextStyle(
-                        color: Colors.purple,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 50.0),
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => GameScreen(
+                          player1: player1.text.isNotEmpty
+                              ? player1.text.trim()
+                              : "Player 1",
+                          player2: player2.text.isNotEmpty
+                              ? player2.text.trim()
+                              : "Player 2",
+                        )),
+              );
+            },
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+                shape: BoxShape.circle,
+              ),
+              child: const Center(
+                child: Text(
+                  'Start Game',
+                  style: TextStyle(
+                    color: Colors.purple,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
-          
-
-   
+          ),
+        ),
       ]),
- 
     );
   }
 }
