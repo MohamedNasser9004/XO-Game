@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'final_result.dart';
+import '../../final_result.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({
@@ -334,12 +334,11 @@ class _GameScreenState extends State<GameScreen> {
                         actions: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.purple,
-                                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                                
-                                ),
+                              backgroundColor: Colors.purple,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
                             onPressed: () {
                               Navigator.pop(context);
                             },
@@ -354,11 +353,11 @@ class _GameScreenState extends State<GameScreen> {
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.purple,
-                                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                                ),
+                              backgroundColor: Colors.purple,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
                             onPressed: () {
                               setState(() {
                                 items = [
@@ -430,9 +429,9 @@ class _GameScreenState extends State<GameScreen> {
                         actions: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                               shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
                                 backgroundColor: Colors.purple),
                             onPressed: () {
                               Navigator.pop(context);
@@ -448,10 +447,9 @@ class _GameScreenState extends State<GameScreen> {
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              
-                               shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
                               backgroundColor: Colors.purple,
                             ),
                             onPressed: () {

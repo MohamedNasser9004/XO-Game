@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:tic_tac_toe3/home_screen.dart';
+import 'package:tic_tac_toe3/features/HomeScreen/home_screen.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({
@@ -19,17 +19,15 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-
-
-   String showWinner(){
-      if(widget.score_1 > widget.score_2){
-        return "${widget.player_1} won";
-      }else if (widget.score_1 < widget.score_2){
-        return "${widget.player_2} won";
-      }else {
-        return "No winner";
-      }
-   }
+  String showWinner() {
+    if (widget.score_1 > widget.score_2) {
+      return "${widget.player_1} won";
+    } else if (widget.score_1 < widget.score_2) {
+      return "${widget.player_2} won";
+    } else {
+      return "No winner";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +47,11 @@ class _ResultScreenState extends State<ResultScreen> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Image.asset( "assets/images/tic_tac_toe.png", height: 120, width: 120,),
+          Image.asset(
+            "assets/images/tic_tac_toe.png",
+            height: 120,
+            width: 120,
+          ),
           const Padding(
             padding: EdgeInsets.all(8),
             child: Text(
@@ -62,7 +64,6 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           ),
 
-
           //! >>>>>>>>>>>>>> list of herors here <<<<<<<<<<<<<<<<<
           SizedBox(
             height: 150,
@@ -74,33 +75,31 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           ),
 
-        const SizedBox(
-          height: 20,
-        ),
+          const SizedBox(
+            height: 20,
+          ),
           Text(
             showWinner(),
-              style: const TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
             ),
-            
+          ),
+
           const SizedBox(
             height: 20,
           ),
 
           ElevatedButton(
             onPressed: () {
-             Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(
-                    
-                      ),
-                    ),
-                    (route) => false,
-                  );
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const HomeScreen(),
+                ),
+                (route) => false,
+              );
             },
             style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purple,
@@ -173,7 +172,7 @@ class _DismissibleItemsState extends State<DismissibleItems> {
           child: ListTile(
             title: Row(
               children: [
-                 Icon(
+                Icon(
                   Icons.star,
                   color: Colors.yellow[500],
                 ),
@@ -192,8 +191,8 @@ class _DismissibleItemsState extends State<DismissibleItems> {
                         ),
                         Text(
                           index == 0 ? "X" : "O",
-                          style:  TextStyle(
-                              color:  index == 0 ? Colors.purple: Colors.orange,
+                          style: TextStyle(
+                              color: index == 0 ? Colors.purple : Colors.orange,
                               fontWeight: FontWeight.bold,
                               fontSize: 16),
                         ),
@@ -201,8 +200,10 @@ class _DismissibleItemsState extends State<DismissibleItems> {
                     ),
                   ),
                 ),
-                 Text(
-                  index == 0 ? "${widget.score_1_} points": "${widget.score_2_} points",
+                Text(
+                  index == 0
+                      ? "${widget.score_1_} points"
+                      : "${widget.score_2_} points",
                   style: const TextStyle(
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
