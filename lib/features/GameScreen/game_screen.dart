@@ -69,6 +69,9 @@ class _GameScreenState extends State<GameScreen> {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15),
+          ),
           title: endGame
               ? const Text(
                   'Game Over',
@@ -142,7 +145,6 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 
-//! function of handle winner
   void handleWinner() async {
     const winnerCases = [
       [0, 1, 2],
@@ -161,10 +163,9 @@ class _GameScreenState extends State<GameScreen> {
         final sItem = items[element[1]];
         final thItem = items[element[2]];
 
-//* of wiiners
         if (fItem == sItem && sItem == thItem && fItem != null) {
           winner = fItem;
-          endRound = true; // end of round
+          endRound = true;
           if (winner == Player.X) {
             setState(() {
               scorePlayer1 += 3;
@@ -187,7 +188,6 @@ class _GameScreenState extends State<GameScreen> {
 
           break;
         }
-        //* of draw
         if (winner == null && counter == 9) {
           endRound = true;
           setState(() {
@@ -220,290 +220,305 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.purple,
-        title: const Text(
-          'Game Panel',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+        title: const Center(
+          child: Text(
+            'Game Panel',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Text(
-            '${widget.player1} : Score $scorePlayer1 ',
-            style: const TextStyle(
-              color: Colors.purple,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            '${widget.player2} : Score $scorePlayer2 ',
-            style: const TextStyle(
-              color: Colors.orange,
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            color: Colors.black,
-            height: 1,
-            width: double.infinity,
-          ),
-          Text(
-            'Round $round',
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-            child: Row(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const Text(
-                  'Turn ',
-                  style: TextStyle(
-                    color: Colors.black,
+                Text(
+                  '${widget.player1} : Score $scorePlayer1 ',
+                  style: const TextStyle(
+                    color: Colors.purple,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  current == Player.X
-                      ? '${widget.player1} (${current.name})'
-                      : '${widget.player2} (${current.name})',
-                  style: TextStyle(
-                    color: current == Player.X ? Colors.purple : Colors.orange,
+                  '${widget.player2} : Score $scorePlayer2 ',
+                  style: const TextStyle(
+                    color: Colors.orange,
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 5),
-            color: Colors.black,
-            height: 1,
-            width: double.infinity,
-          ),
-          Board(
-            items: items,
-            onClick: (int index) {
-              if (endRound) return;
-              if (items[index] != null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Already filled')),
-                );
-                return;
-              }
-              setState(() {
-                counter++;
-                items[index] = current;
-                current = current == Player.X ? Player.O : Player.X;
-
-                print(counter);
-              });
-              handleWinner();
-            },
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text(
-                          'Are you sure to reset ?',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        actions: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.purple,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text(
-                              "No",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.purple,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                items = [
-                                  null,
-                                  null,
-                                  null,
-                                  null,
-                                  null,
-                                  null,
-                                  null,
-                                  null,
-                                  null,
-                                ];
-                                winner = null;
-                                endRound = false;
-                                endGame = false;
-                                scorePlayer1 = 0;
-                                scorePlayer2 = 0;
-                                round = 1;
-                                maxRounds = 3;
-                                counter = 0;
-                                current = Player.X;
-                              });
-                              Navigator.pop(context);
-                            },
-                            child: const Text(
-                              "Yes",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[300],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    )),
-                child: const Text(
-                  'Reset',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+            const SizedBox(height: 10),
+            Divider(color: Colors.black),
+            Text(
+              'Round $round',
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text(
-                          'Are you sure to exit ?',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+              child: Row(
+                children: [
+                  const Text(
+                    'Turn ',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    current == Player.X
+                        ? '${widget.player1} (${current.name})'
+                        : '${widget.player2} (${current.name})',
+                    style: TextStyle(
+                      color:
+                          current == Player.X ? Colors.purple : Colors.orange,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Divider(color: Colors.black),
+            Board(
+              items: items,
+              onClick: (int index) {
+                if (endRound) return;
+                if (items[index] != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Already filled')),
+                  );
+                  return;
+                }
+                setState(() {
+                  counter++;
+                  items[index] = current;
+                  current = current == Player.X ? Player.O : Player.X;
+                });
+                handleWinner();
+              },
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        ),
-                        actions: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
+                          title: const Text(
+                            'Are you sure to reset ?',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          actions: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.purple,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                backgroundColor: Colors.purple),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            child: const Text(
-                              "No",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
                               ),
-                            ),
-                          ),
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              backgroundColor: Colors.purple,
-                            ),
-                            onPressed: () {
-                              Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => ResultScreen(
-                                    player_1: widget.player1,
-                                    player_2: widget.player2,
-                                    score_1: scorePlayer1,
-                                    score_2: scorePlayer2,
-                                  ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                "No",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
                                 ),
-                                (route) => false,
-                              );
-                            },
-                            child: const Text(
-                              "Yes",
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
                               ),
                             ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.purple,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  items = [
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                  ];
+                                  winner = null;
+                                  endRound = false;
+                                  endGame = false;
+                                  scorePlayer1 = 0;
+                                  scorePlayer2 = 0;
+                                  round = 1;
+                                  maxRounds = 3;
+                                  counter = 0;
+                                  current = Player.X;
+                                });
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                "Yes",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green[300],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: const Text(
+                    'Reset',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red[500],
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
+                          title: const Text(
+                            'Are you sure to exit ?',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          actions: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                backgroundColor: Colors.purple,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text(
+                                "No",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                backgroundColor: Colors.purple,
+                              ),
+                              onPressed: () {
+                                Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ResultScreen(
+                                      player_1: widget.player1,
+                                      player_2: widget.player2,
+                                      score_1: scorePlayer1,
+                                      score_2: scorePlayer2,
+                                    ),
+                                  ),
+                                  (route) => false,
+                                );
+                              },
+                              child: const Text(
+                                "Yes",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red[500],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  'Exit',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+                  child: const Text(
+                    'Exit',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-              )
-            ],
-          )
-        ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-// ignore: must_be_immutable
 class Board extends StatelessWidget {
   Board({
     super.key,
@@ -517,26 +532,37 @@ class Board extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: GridView(
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3),
-          children: [
-            for (int i = 0; i < items.length; i++)
-              InkWell(
-                onTap: () {
-                  onClick!(i);
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.black, width: 2),
-                  ),
-                  child: Center(
-                    child: BoardItem(item: items[i]),
-                  ),
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+        ),
+        children: [
+          for (int i = 0; i < items.length; i++)
+            InkWell(
+              onTap: () {
+                onClick!(i);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.black, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Center(
+                  child: BoardItem(item: items[i]),
                 ),
               ),
-          ]),
+            ),
+        ],
+      ),
     );
   }
 }

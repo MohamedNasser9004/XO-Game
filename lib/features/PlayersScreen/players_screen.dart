@@ -29,13 +29,20 @@ class _PlayersScreenState extends State<PlayersScreen> {
     return Scaffold(
       backgroundColor: Colors.purple,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.purple,
-        title: const Text(
-          'Players Panel',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+        leading: const Icon(
+          Icons.arrow_back_ios,
+          color: Colors.white,
+        ),
+        title: const Center(
+          child: Text(
+            'Players Panel',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
@@ -50,7 +57,7 @@ class _PlayersScreenState extends State<PlayersScreen> {
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.5),
+                    color: Colors.white.withOpacity(0.65),
                     spreadRadius: 5,
                     blurRadius: 5,
                     offset: const Offset(0, 3), // changes position of shadow
@@ -89,7 +96,7 @@ class _PlayersScreenState extends State<PlayersScreen> {
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.white.withOpacity(0.5),
+                    color: Colors.white.withOpacity(0.65),
                     spreadRadius: 5,
                     blurRadius: 5,
                     offset: const Offset(0, 3), // changes position of shadow
