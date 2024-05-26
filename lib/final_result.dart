@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:tic_tac_toe3/features/HomeScreen/home_screen.dart';
+import 'package:tic_tac_toe3/features/PlayersScreen/players_screen.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({
@@ -96,7 +97,7 @@ class _ResultScreenState extends State<ResultScreen> {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const HomeScreen(),
+                  builder: (context) => const PlayersScreen(),
                 ),
                 (route) => false,
               );

@@ -17,13 +17,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.purple,
       appBar: AppBar(
+        elevation: 0,
         backgroundColor: Colors.purple,
-        title: const Text(
-          'Welcome to TIC TAC TOE',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+        title: const Center(
+          child: Text(
+            'Welcome to TIC TAC TOE',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
       ),
